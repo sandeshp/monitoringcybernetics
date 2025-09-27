@@ -2,9 +2,9 @@
 
 1. Clone the repo
 2. Open the console terminal and go to folder OutsideInMonitor
-3. .\gradlew build
-4. Rename the file src\main\resources\application.properties.example to application.properties
-5. Fill in the required information
+3. Rename the file src\main\resources\application.properties.example to application.properties
+4. Fill in the required information
+5. .\gradlew build
 6. .\gradlew run
 
 ### Design Choices
