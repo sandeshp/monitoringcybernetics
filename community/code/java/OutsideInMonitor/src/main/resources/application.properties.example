@@ -1,0 +1,43 @@
+spring.application.name=outside-in-monitor
+
+# Email Notification Configuration - used to send out email notifications
+spring.mail.host=smtp.<your-email-provider>.com
+spring.mail.port=587
+spring.mail.username=<your-user-name>@<your-email-provider>.com
+spring.mail.password=<your-email-password>
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.transport.protocol=smtp
+
+# Application Specific Configuration
+# Total number of nodes in the network. Not accounting for all nodes will result in more frequent pings and notifications than desired
+app.operation.total_nodes=<get network size from admin, see welcome email>
+# All specified intervals should be multiples of (recur_mins * total_nodes)
+app.operation.recur_mins=<get recurrance from admin, see welcome email>
+
+# Self Node Configuration
+# This node's number in the network, should be unique and between 0 and total_nodes-1
+app.self.num=<get this unique partner number from the admin, see welcome email>
+app.self.id=<get this unique partner id from the admin, see welcome email>
+app.self.name=<A display name for this monitoring node, see welcome email>
+app.self.sender_email=<The email address to send notifications from, Ex - team@your-company.com>
+app.self.description=<An optional description of the monitoring nod - it's ownership, purpose, SKU etc>
+app.self.location.country=<The country where this monitoring node is located, Ex - USA / India / Germany>
+app.self.location.state=<The state where this monitoring node is located, WA/ CA>
+app.self.location.city=<The city where this monitoring node is located, Ex - Redmond>
+app.self.location.latitude=<Latitude of the location, Ex - 57.6820>
+app.self.location.longitude=<Longitude of the location, Ex - -125.1235>
+app.self.location.carrier=<The telecom network carrier, Ex - AT&T / Verizon / Vodafone>
+
+# Target Services Configuration - list the monitored URLs here
+app.targets[0].name=<Choose a display name for the target service>
+app.targets[0].url=<MOST Important - The URL we will GET, verify it works using curl/ browser, Ex - https://downannouncer.com/health>
+app.targets[0].email=<The email address to send notifications to>
+# Caution: All specified intervals should be multiples of (recur_mins * total_nodes)
+app.targets[0].interval_mins=<The interval in minutes at which this target should be monitored, Ex - 5, see caution above>
+
+app.targets[1].name=<.. see above ..>
+app.targets[1].url=<.. see above ..>
+app.targets[1].email=<.. see above ..>
+# Caution: All specified intervals should be multiples of (recur_mins * total_nodes)
+app.targets[1].interval_mins=<.. see above ..>
