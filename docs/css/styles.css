@@ -238,6 +238,8 @@ section {
   position: relative;
   padding: 8rem 0 5rem;
   background: url('../images/hero-background.jpg') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
   color: white;
   overflow: hidden;
 }
