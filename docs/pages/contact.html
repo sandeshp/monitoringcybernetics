@@ -61,7 +61,7 @@
         
         <div class="contact-content">
           <div class="contact-form-container">
-            <form id="contactForm" class="contact-form">
+            <form id="contactForm" class="contact-form" action="mailto:team@monitoringcybernetics.com" method="post" enctype="text/plain">
               <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
@@ -88,7 +88,12 @@
               </div>
               
               <div class="form-group full-width">
-                <a href="#" onclick="openEmailClient()" class="btn btn-primary">Send Message</a>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+              </div>
+              
+              <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Send Message</button>
               </div>
             </form>
           </div>

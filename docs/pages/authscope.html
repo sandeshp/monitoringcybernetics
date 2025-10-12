@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="icon" type="image/png" href="../images/authscope.png">
+    <title>AuthScope</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(180deg, #f0f4f9 0%, #d8e1ef 100%);
+            color: #1b2d45;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        a {
+            color: #2b7df5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #1b5fcd;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            background: #f8fbff;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #ffffff;
+            color: #1b2d45;
+            padding: 72px 0 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(18, 38, 71, 0.08);
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .brand-logo {
+            width: 180px;
+            height: auto;
+            filter: drop-shadow(0 18px 32px rgba(18, 38, 71, 0.28));
+        }
+
+        .brand-row h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: #132342;
+        }
+
+        .brand-row p {
+            font-size: 1.15rem;
+            color: #3d506e;
+        }
+
+        .header h1 {
+            font-size: 2.45rem;
+            font-weight: 700;
+            color: #132342;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            max-width: 520px;
+            color: #4c5f7e;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            justify-content: flex-end;
+            pointer-events: none;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 24px;
+            pointer-events: auto;
+        }
+
+        .company-logo {
+            width: 90px;
+            height: auto;
+            filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.25));
+        }
+
+        .copyright-note {
+            text-align: center;
+            margin-top: 12px;
+            color: rgba(27, 45, 69, 0.75);
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+            padding: 72px 112px 128px;
+            background: transparent;
+        }
+
+        .step-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .step-layout--two {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .step-layout--two.align-start {
+            align-items: flex-start;
+        }
+
+        .form-pane,
+        .output-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .output-pane {
+            padding-top: 0;
+        }
+
+        .step-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #10223a;
+        }
+
+        .auth-section {
+            background: #f7f9fe;
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid #d6e4ff;
+        }
+
+        .tabs-container {
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 22px;
+            border: 1px solid rgba(24, 43, 79, 0.12);
+            box-shadow: 0 24px 60px rgba(18, 38, 71, 0.15);
+            backdrop-filter: blur(12px);
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0;
+            padding: 0 40px;
+            border-bottom: 1px solid rgba(24, 43, 79, 0.08);
+            background: transparent;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 26px 12px 22px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.02rem;
+            color: #3a4c6f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .tab-button span {
+            font-size: 0.8rem;
+            color: #8491a9;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background: transparent;
+            transition: background 0.25s ease;
+        }
+
+        .tab-button:hover {
+            color: #2b7df5;
+        }
+
+        .tab-button.active {
+            color: #16294a;
+            background: rgba(35, 57, 93, 0.12);
+            box-shadow: inset 0 -4px 0 #1c3f72;
+        }
+
+        .tab-button.active span {
+            color: #1c3f72;
+        }
+
+        .tab-button.active::after {
+            background: #2b7df5;
+        }
+
+        .tab-panel {
+            padding: 44px 52px 52px;
+            background: transparent;
+        }
+
+        .tab-panel.hidden {
+            display: none;
+        }
+
+        .mode-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .mode-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 2px solid rgba(35, 57, 93, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 600;
+            color: #3a4c6f;
+        }
+
+        .mode-option input[type="radio"] {
+            accent-color: #2b7df5;
+        }
+
+        .mode-option.active {
+            border-color: rgba(35, 57, 93, 0.4);
+            background: rgba(35, 57, 93, 0.15);
+            color: #10223a;
+            box-shadow: 0 18px 32px rgba(35, 57, 93, 0.18);
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #1b2d45;
+        }
+
+        .form-group + .form-group {
+            margin-top: 32px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #1b2d45;
+            flex: 0 0 190px;
+        }
+
+        .form-group input,
+        .form-group select {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1.5px solid rgba(35, 57, 93, 0.2);
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 14px;
+            font-size: 14px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            font-family: inherit;
+            max-width: 360px;
+            color: #10223a;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 160px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            width: 100%;
+            border: 1.5px solid rgba(35, 57, 93, 0.2);
+            border-radius: 14px;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.94);
+            color: #10223a;
+        }
+
+        .form-group--stacked {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .form-group--scope {
+            margin-bottom: 32px;
+        }
+
+        #clientIdAuth {
+            margin-top: 112px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2b7df5;
+            box-shadow: 0 0 0 4px rgba(43, 125, 245, 0.16);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #26548f, #1d3e6e);
+            color: #ffffff;
+            border: none;
+            padding: 16px 26px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-bottom: 10px;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary {
+            background: #2b7df5;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 18px rgba(43, 125, 245, 0.35);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(28, 63, 114, 0.35);
+        }
+
+        .btn:disabled {
+            background: #9ba9c3;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2da88c, #1f7b63);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 12px 24px rgba(39, 162, 123, 0.35);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #d95757, #b13535);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 12px 24px rgba(214, 69, 69, 0.32);
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: rgba(13, 31, 54, 0.95);
+            color: #ffffff;
+            padding: 14px 18px;
+            border-radius: 14px;
+            box-shadow: 0 14px 32px rgba(10, 24, 45, 0.35);
+            font-weight: 600;
+            transform: translateX(150%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .status {
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .status.success {
+            background: #ebf9f1;
+            color: #1f7c4d;
+            border-color: #b7efd3;
+        }
+
+        .status.error {
+            background: #fdf1f1;
+            color: #c73939;
+            border-color: #f5b8b8;
+        }
+
+        .status.info {
+            background: #eef5ff;
+            color: #1f4bb8;
+            border-color: #bfd3ff;
+        }
+
+        .status.warning {
+            background: rgba(254, 247, 234, 0.92);
+            color: #925b0f;
+            border-color: rgba(244, 217, 165, 0.6);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .callback-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 26px 36px;
+            border: 1px solid rgba(35, 57, 93, 0.26);
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(35, 57, 93, 0.35), rgba(19, 31, 49, 0.45));
+            color: #d9e3f7;
+            box-shadow: 0 24px 50px rgba(17, 31, 52, 0.26);
+            backdrop-filter: blur(12px);
+        }
+
+        .callback-banner strong {
+            color: #ffffff;
+        }
+
+        .callback-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
+
+        #callbackUrl {
+            font-size: 14px;
+            font-style: normal;
+        }
+
+        .icon-button {
+            border: none;
+            background: rgba(255, 255, 255, 0.18);
+            color: #eff2ff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .icon-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .curl-options {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 6px;
+            color: #10223a;
+            font-size: 13px;
+        }
+
+        .curl-options label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .revocation-info {
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: #4a5570;
+        }
+
+        .revocation-info strong {
+            color: #10223a;
+        }
+
+        .revocation-status {
+            margin-top: 12px;
+        }
+
+        .curl-command {
+            background: linear-gradient(135deg, #1f3558, #101c33);
+            color: #e9eef9;
+            padding: 22px;
+            border-radius: 14px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12.5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 20px 0;
+            min-height: 220px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #264a80, #1b3561);
+            color: #ffffff;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn:hover {
+            background: #163f82;
+        }
+
+        .copy-btn--primary {
+            background: #2b7df5;
+        }
+
+        .copy-btn--primary:hover {
+            background: #1e64d5;
+        }
+
+        .token-input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .token-input {
+            width: 100%;
+            border: 1.5px solid rgba(35, 57, 93, 0.22);
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 180px;
+            background: rgba(255, 255, 255, 0.92);
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            color: #10223a;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .token-input--sm {
+            min-height: 120px;
+            font-size: 12.5px;
+        }
+
+        .token-input:focus {
+            outline: none;
+            border-color: #2b7df5;
+            box-shadow: 0 0 0 4px rgba(43, 125, 245, 0.16);
+        }
+
+        .token-action {
+            width: 100%;
+        }
+
+        .revocation-url {
+            font-size: 0.92rem;
+            color: #4a5570;
+            background: #f4f7ff;
+            border: 1px solid #d6e4ff;
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+
+        .output-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            border: 1px solid rgba(24, 43, 79, 0.12);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: 0 28px 60px rgba(18, 38, 71, 0.18);
+            backdrop-filter: blur(10px);
+        }
+
+        .output-card h3 {
+            margin: 0;
+            color: #10223a;
+            font-size: 1.15rem;
+        }
+
+        .auth-card {
+            gap: 24px;
+        }
+
+        .jwt-info {
+            background: rgba(242, 247, 255, 0.78);
+            border: 1px solid rgba(24, 43, 79, 0.12);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .jwt-info pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 12px;
+            color: #27375a;
+            margin: 0;
+        }
+
+        .placeholder {
+            color: rgba(151, 163, 188, 0.7);
+            font-size: 13px;
+        }
+
+        .reset-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 32px;
+            width: 100%;
+        }
+
+        .reset-btn {
+            width: auto;
+            padding: 12px 30px;
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding: 24px 18px;
+            }
+
+            .main-content {
+                padding: 36px 36px 40px;
+            }
+
+            .tab-panel {
+                padding: 28px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .container {
+                border-radius: 16px;
+            }
+
+            .header {
+                padding: 40px 32px 32px;
+                text-align: left;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 28px 24px 36px;
+                gap: 24px;
+            }
+
+            .step-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .step-layout--two {
+                flex-direction: column;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .form-group label {
+                flex: none;
+            }
+
+            .output-pane {
+                padding-top: 0;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-buttons .btn {
+                min-width: unset;
+            }
+
+            .tab-list {
+                flex-direction: column;
+                padding: 16px 20px 0;
+            }
+
+            .tab-button {
+                text-align: left;
+                align-items: flex-start;
+                padding: 16px 0;
+            }
+
+            .tab-button::after {
+                display: none;
+            }
+
+            .tab-panel {
+                padding: 24px 20px 28px;
+            }
+
+            .callback-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-row">
+                <img src="../images/authscope.png" alt="AuthScope logo" class="brand-logo" style="width: 240px; height: auto;">
+                <div>
+                    <h1>AuthScope</h1>
+                    <p>Verify smarter, Trust deeper</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <section class="callback-banner" id="callbackBar">
+                <div class="callback-row">
+                    <strong>Configure Redirect URL:</strong>
+                    <span id="callbackUrl" class="yw_text_editable" contenteditable="plaintext-only"></span>
+                </div>
+                <button class="icon-button" id="copyCallbackBtn" title="Copy callback URL">Copy URL</button>
+            </section>
+
+            <section class="tabs-container">
+                <div class="tab-list">
+                    <button class="tab-button active" data-tab="authTab">
+                        Authorization
+                        <span>Obtain auth code</span>
+                    </button>
+                    <button class="tab-button" data-tab="tokenTab">
+                        Token Tools
+                        <span>Parse and validate token</span>
+                    </button>
+                </div>
+                <div class="tab-panel" id="authTab">
+                    <div class="form-group mode-row" role="radiogroup" aria-label="Authorization mode">
+                        <label class="mode-option active" id="clientIdModeOption">
+                            <input type="radio" name="authMode" id="clientIdMode" value="clientId" checked>
+                            Client ID Mode
+                        </label>
+                        <label class="mode-option" id="pkceModeOption">
+                            <input type="radio" name="authMode" id="pkceMode" value="pkce">
+                            PKCE Mode
+                        </label>
+                    </div>
+
+                    <div id="statusArea"></div>
+
+                    <div class="step-layout step-layout--two align-start">
+                        <div class="form-pane">
+                            <div class="output-card auth-card">
+                                <div class="form-group">
+                                    <label for="providerPreset">OAuth Provider Presets</label>
+                                    <select id="providerPreset" onchange="window.oauthTester && window.oauthTester.applyProviderPreset(this.value)">
+                                        <option value="">Select a provider...</option>
+                                        <option value="sso-tools" selected>SSO Tools</option>
+                                        <option value="github">GitHub</option>
+                                        <option value="google">Google</option>
+                                        <option value="microsoft">Microsoft</option>
+                                        <option value="discord">Discord</option>
+                                        <option value="linkedin">LinkedIn</option>
+                                        <option value="okta">Okta (Example)</option>
+                                    </select>
+                                </div>
+
+                                <div id="clientIdForm">
+                                    <div class="form-group">
+                                        <label for="authorizationUrl">Authorization URL</label>
+                                        <input type="url" id="authorizationUrl" placeholder="https://example.com/oauth/authorize" value="https://idp.sso.tools/mcidp/oauth2/authorize">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tokenUrl">Token URL</label>
+                                        <input type="url" id="tokenUrl" placeholder="https://example.com/oauth/token" value="https://idp.sso.tools/mcidp/oauth2/token">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientId">Client ID</label>
+                                        <input type="text" id="clientId" placeholder="your-client-id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="clientSecret">Client Secret</label>
+                                        <input type="password" id="clientSecret" placeholder="your-client-secret">
+                                    </div>
+                                    <div class="form-group form-group--scope">
+                                        <label for="scope">Scope</label>
+                                        <input type="text" id="scope" placeholder="read write" value="read">
+                                    </div>
+                                    <button class="btn btn-primary" id="clientIdAuth">Request Auth Code</button>
+                                </div>
+
+                                <div id="pkceForm" class="hidden">
+                                    <div class="form-group">
+                                        <label for="pkceAuthUrl">Authorization URL</label>
+                                        <input type="url" id="pkceAuthUrl" placeholder="https://example.com/oauth/authorize" value="https://idp.sso.tools/mcidp/oauth2/authorize">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pkceTokenUrl">Token URL</label>
+                                        <input type="url" id="pkceTokenUrl" placeholder="https://example.com/oauth/token" value="https://idp.sso.tools/mcidp/oauth2/token">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pkceClientId">Client ID</label>
+                                        <input type="text" id="pkceClientId" placeholder="your-client-id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pkceScope">Scope</label>
+                                        <input type="text" id="pkceScope" placeholder="read write" value="read">
+                                    </div>
+                                    <button class="btn" id="pkceAuth">Obtain PKCE Auth code</button>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="output-pane">
+                        <div class="output-card" id="curlSectionWrapper">
+                            <h3>Generated Curl Command</h3>
+                            <div class="curl-options">
+                                <span>Format options:</span>
+                                <label>
+                                    <input type="checkbox" id="curlSingleLine">
+                                    Single line
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="curlPowerShell">
+                                    Windows PowerShell
+                                </label>
+                            </div>
+                            <div class="curl-command" id="curlCommand"><span class="placeholder">Complete Authorization to see the curl command.</span></div>
+                            <button class="copy-btn" id="copyCurlBtn">Copy Curl Command</button>
+                            <div class="status warning" style="font-style: italic; font-size: 16px; margin-bottom: 18px;">
+                                <strong class="yw_text_editable" contenteditable="plaintext-only">Run in Terminal:</strong>
+                                <span data-yw-auto="" contenteditable="plaintext-only">Use the above curl command in your local terminal to obtain tokens.</span>
+                            </div>
+                            <button class="btn btn-primary" id="goToParseBtn">Parse/ Revoke Tokens</button>
+                            <div class="revocation-info hidden" id="revocationInfo"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="tab-panel hidden" id="tokenTab">
+                    <div class="step-layout">
+                        <div>
+                            <div class="token-input-section">
+                                <textarea class="token-input" id="tokenInput" placeholder="Paste your JWT access token here..."></textarea>
+                                <button class="btn btn-secondary token-action" id="parseTokenBtn">Parse JWT Token</button>
+                                <textarea class="token-input token-input--sm" id="idTokenInput" placeholder="Paste the ID token for revocation here, the ID token will be revoked along with"></textarea>
+                                <button class="btn btn-danger token-action" id="revokeTokenBtn">Revoke Token</button>
+                                <div class="status info hidden revocation-status" id="revocationStatus"></div>
+                            </div>
+                        </div>
+                        <div class="output-card">
+                            <h3>Token Details</h3>
+                            <div id="jwtSection" class="hidden">
+                                <div class="jwt-info">
+                                    <h4>Header</h4>
+                                    <pre id="jwtHeader">No token parsed</pre>
+                                </div>
+                                <div class="jwt-info">
+                                    <h4>Payload</h4>
+                                    <pre id="jwtPayload">No token parsed</pre>
+                                </div>
+                            </div>
+                            <div class="jwt-info" id="userInfoContainer">
+                                <h4>User Information</h4>
+                                <pre id="userInfoDisplay">No user information available</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="reset-container">
+                        <button class="btn btn-danger reset-btn" id="resetBtn">Reset Session</button>
+                    </div>
+                    <p class="copyright-note">© 2025 AuthScope. Built for secure OAuth troubleshooting.</p>
+            </section>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="../fdmzw1jis1.png" alt="Monitoring Cybernetics" class="company-logo">
+        </div>
+    </footer>
+
+    <script>
+        class OAuthTester {
+            constructor() {
+                this.currentMode = 'clientId';
+                this.authState = {
+                    authCode: null,
+                    state: null,
+                    codeVerifier: null,
+                    tokenUrl: null,
+                    clientId: null,
+                    clientSecret: null,
+                    callbackUrl: null
+                };
+                this.providerInfo = {
+                    revocationUrl: null,
+                    clientSecretPlaceholder: 'YOUR_CLIENT_SECRET'
+                };
+                this.curlOptions = {
+                    singleLine: false,
+                    powerShell: false
+                };
+                this.currentStep = 1;
+                this.toastContainer = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.updateCallbackUrl();
+                this.checkForCallback();
+                this.updateUI();
+                this.updateRevocationStatusInfo();
+                this.updateCallbackCopyVisibility();
+                this.setupTabs();
+                this.createToastContainer();
+            }
+
+            createToastContainer() {
+                if (!this.toastContainer) {
+                    this.toastContainer = document.createElement('div');
+                    this.toastContainer.className = 'toast-container';
+                    document.body.appendChild(this.toastContainer);
+                }
+            }
+
+            showToast(message) {
+                if (!this.toastContainer) {
+                    this.createToastContainer();
+                }
+
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                this.toastContainer.appendChild(toast);
+
+                requestAnimationFrame(() => {
+                    toast.classList.add('show');
+                });
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 400);
+                }, 2000);
+            }
+
+            setupEventListeners() {
+                // Mode switching
+                document.getElementById('clientIdMode').addEventListener('change', () => this.switchMode('clientId'));
+                document.getElementById('pkceMode').addEventListener('change', () => this.switchMode('pkce'));
+
+                // Authentication buttons
+                document.getElementById('clientIdAuth').addEventListener('click', () => this.startClientIdFlow());
+                document.getElementById('pkceAuth').addEventListener('click', () => this.startPKCEFlow());
+                document.getElementById('clientSecret').addEventListener('input', (event) => this.updateClientSecretPlaceholder(event.target.value));
+                document.getElementById('pkceClientId').addEventListener('input', (event) => this.updateClientIdPlaceholder(event.target.value));
+                document.getElementById('clientId').addEventListener('input', (event) => this.updateClientIdPlaceholder(event.target.value));
+
+                // Token parsing
+                document.getElementById('parseTokenBtn').addEventListener('click', () => this.parseJWTToken());
+                document.getElementById('revokeTokenBtn').addEventListener('click', () => this.revokeToken());
+
+                // Reset button
+                document.getElementById('resetBtn').addEventListener('click', () => this.resetSessionState());
+                document.getElementById('tokenInput').addEventListener('input', () => this.updateRevocationStatusInfo());
+                document.getElementById('idTokenInput').addEventListener('input', () => this.updateRevocationStatusInfo());
+
+                // Copy curl command
+                document.getElementById('copyCurlBtn').addEventListener('click', () => this.copyCurlCommand());
+                document.getElementById('copyCallbackBtn').addEventListener('click', () => this.copyCallbackUrl());
+
+                const singleLineOption = document.getElementById('curlSingleLine');
+                const powerShellOption = document.getElementById('curlPowerShell');
+                const goToParseBtn = document.getElementById('goToParseBtn');
+
+                singleLineOption.addEventListener('change', (event) => {
+                    this.updateCurlOptions({ singleLine: event.target.checked });
+                });
+
+                powerShellOption.addEventListener('change', (event) => {
+                    this.updateCurlOptions({ powerShell: event.target.checked });
+                });
+
+                goToParseBtn.addEventListener('click', () => this.goToTokenTab());
+            }
+
+            goToTokenTab() {
+                this.showTab('tokenTab');
+                const tokenTab = document.getElementById('tokenTab');
+                if (tokenTab) {
+                    tokenTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            switchMode(mode) {
+                this.currentMode = mode;
+                
+                // Update radio states
+                document.querySelectorAll('.mode-option').forEach(option => option.classList.remove('active'));
+                const activeOption = document.getElementById(`${mode}ModeOption`);
+                if (activeOption) {
+                    activeOption.classList.add('active');
+                    const radio = activeOption.querySelector('input[type="radio"]');
+                    if (radio && !radio.checked) {
+                        radio.checked = true;
+                    }
+                }
+
+                // Toggle forms
+                if (mode === 'clientId') {
+                    document.getElementById('clientIdForm').classList.remove('hidden');
+                    document.getElementById('pkceForm').classList.add('hidden');
+                } else {
+                    document.getElementById('clientIdForm').classList.add('hidden');
+                    document.getElementById('pkceForm').classList.remove('hidden');
+                }
+
+                this.updateUI();
+            }
+
+            updateCallbackUrl() {
+                const callbackUrl = window.location.origin + window.location.pathname;
+                document.getElementById('callbackUrl').textContent = callbackUrl;
+                this.authState.callbackUrl = callbackUrl;
+                this.updateCallbackCopyVisibility();
+            }
+
+            generateRandomString(length) {
+                // For PKCE code verifier, use URL-safe characters without padding
+                // RFC 7636 specifies unreserved characters: A-Z a-z 0-9 - . _ ~
+                const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+                let text = '';
+                for (let i = 0; i < length; i++) {
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                }
+                return text;
+            }
+
+            // Generate cryptographically secure random string for PKCE
+            generateSecureRandomString(length) {
+                const array = new Uint8Array(length);
+                window.crypto.getRandomValues(array);
+                // Convert to base64url encoding (RFC 4648 Section 5)
+                return btoa(String.fromCharCode.apply(null, array))
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_')
+                    .replace(/=+$/, '')
+                    .substring(0, length);
+            }
+
+            async generateCodeChallenge(codeVerifier) {
+                console.log('🔐 Generating code challenge for verifier:', codeVerifier.substring(0, 10) + '...');
+                
+                const data = new TextEncoder().encode(codeVerifier);
+                const digest = await window.crypto.subtle.digest('SHA-256', data);
+                const challenge = btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_')
+                    .replace(/=+$/, '');
+                
+                console.log('🔐 Generated code challenge:', challenge.substring(0, 10) + '...');
+                return challenge;
+            }
+
+            async startClientIdFlow() {
+                const authUrl = document.getElementById('authorizationUrl').value.trim();
+                const clientId = document.getElementById('clientId').value.trim();
+                const scope = document.getElementById('scope').value.trim();
+                
+                if (!authUrl || !clientId) {
+                    this.showStatus('Please fill in Authorization URL and Client ID', 'error');
+                    return;
+                }
+
+                // Clear any existing callback parameters
+                if (window.location.search) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+
+                const state = this.generateRandomString(32);
+                
+                // Store session data
+                this.authState.state = state;
+                this.authState.tokenUrl = document.getElementById('tokenUrl').value.trim();
+                this.authState.clientId = clientId;
+                this.authState.clientSecret = document.getElementById('clientSecret').value.trim();
+
+                sessionStorage.setItem('oauth_state', state);
+                sessionStorage.setItem('auth_mode', 'clientId');
+                sessionStorage.setItem('token_url', this.authState.tokenUrl);
+                sessionStorage.setItem('client_id', clientId);
+                sessionStorage.setItem('client_secret', this.authState.clientSecret);
+
+                const authParams = new URLSearchParams({
+                    response_type: 'code',
+                    client_id: clientId,
+                    redirect_uri: this.authState.callbackUrl,
+                    scope: scope || 'read',
+                    state: state
+                });
+
+                const fullAuthUrl = `${authUrl}?${authParams.toString()}`;
+                
+                console.log('🚀 Starting Client ID OAuth flow:', {
+                    authUrl,
+                    clientId: clientId.substring(0, 10) + '...',
+                    state: state.substring(0, 10) + '...',
+                    callbackUrl: this.authState.callbackUrl,
+                    fullUrl: fullAuthUrl.substring(0, 100) + '...'
+                });
+                
+                this.showStatus('🚀 Opening OAuth authorization window...', 'info');
+                
+                // Small delay to ensure UI updates before popup
+                setTimeout(() => {
+                    this.openOAuthPopup(fullAuthUrl);
+                }, 100);
+            }
+
+            async startPKCEFlow() {
+                const authUrl = document.getElementById('pkceAuthUrl').value.trim();
+                const clientId = document.getElementById('pkceClientId').value.trim();
+                const scope = document.getElementById('pkceScope').value.trim();
+                
+                if (!authUrl || !clientId) {
+                    this.showStatus('Please fill in Authorization URL and Client ID', 'error');
+                    return;
+                }
+
+                // Clear any existing callback parameters
+                if (window.location.search) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+
+                const state = this.generateRandomString(32);
+                // PKCE code verifier must be 43-128 characters, use secure random generation
+                const codeVerifier = this.generateSecureRandomString(128);
+                const codeChallenge = await this.generateCodeChallenge(codeVerifier);
+                
+                console.log('🔐 PKCE Parameters:', {
+                    codeVerifier: codeVerifier.substring(0, 20) + '...',
+                    codeChallenge: codeChallenge.substring(0, 20) + '...',
+                    verifierLength: codeVerifier.length,
+                    challengeLength: codeChallenge.length
+                });
+                
+                // Store session data for PKCE
+                this.authState.state = state;
+                this.authState.codeVerifier = codeVerifier;
+                this.authState.tokenUrl = document.getElementById('pkceTokenUrl').value.trim();
+                this.authState.clientId = clientId;
+
+                sessionStorage.setItem('oauth_state', state);
+                sessionStorage.setItem('code_verifier', codeVerifier);
+                sessionStorage.setItem('auth_mode', 'pkce');
+                sessionStorage.setItem('token_url', this.authState.tokenUrl);
+                sessionStorage.setItem('client_id', clientId);
+
+                const authParams = new URLSearchParams({
+                    response_type: 'code',
+                    client_id: clientId,
+                    redirect_uri: this.authState.callbackUrl,
+                    scope: scope || 'read',
+                    state: state,
+                    code_challenge: codeChallenge,
+                    code_challenge_method: 'S256'
+                });
+
+                const fullAuthUrl = `${authUrl}?${authParams.toString()}`;
+                
+                console.log('🚀 Starting PKCE OAuth flow:', {
+                    authUrl,
+                    clientId: clientId.substring(0, 10) + '...',
+                    state: state.substring(0, 10) + '...',
+                    codeVerifier: codeVerifier.substring(0, 20) + '...',
+                    codeChallenge: codeChallenge.substring(0, 20) + '...',
+                    callbackUrl: this.authState.callbackUrl,
+                    fullUrl: fullAuthUrl.substring(0, 100) + '...'
+                });
+                
+                this.showStatus('🚀 Opening PKCE OAuth authorization window...', 'info');
+                
+                // Small delay to ensure UI updates before popup
+                setTimeout(() => {
+                    this.openOAuthPopup(fullAuthUrl);
+                }, 100);
+            }
+
+            updateClientSecretPlaceholder(value) {
+                if (value) {
+                    this.providerInfo.clientSecretPlaceholder = value;
+                } else {
+                    this.providerInfo.clientSecretPlaceholder = 'YOUR_CLIENT_SECRET';
+                }
+                this.updateRevocationStatusInfo();
+                this.generateCurlCommand();
+            }
+
+            updateRevocationStatusInfo() {
+                const revocationStatus = document.getElementById('revocationStatus');
+                if (!revocationStatus) return;
+
+                revocationStatus.classList.add('hidden');
+                revocationStatus.classList.remove('success', 'warning', 'error');
+                revocationStatus.classList.add('info');
+                revocationStatus.textContent = '';
+            }
+
+            updateClientIdPlaceholder(value) {
+                if (value) {
+                    this.authState.clientId = value;
+                }
+                this.generateCurlCommand();
+            }
+
+            openOAuthPopup(url) {
+                console.log('🪟 Opening OAuth popup with URL:', url);
+                
+                // Validate the URL before opening
+                try {
+                    const testUrl = new URL(url);
+                    console.log('✅ URL validation passed:', {
+                        protocol: testUrl.protocol,
+                        host: testUrl.host,
+                        pathname: testUrl.pathname,
+                        search: testUrl.search
+                    });
+                } catch (error) {
+                    console.error('❌ Invalid OAuth URL:', error);
+                    this.showStatus(`❌ Invalid OAuth URL: ${error.message}`, 'error');
+                    return;
+                }
+                
+                const popup = window.open(
+                    url,
+                    'oauth_popup',
+                    'width=600,height=700,scrollbars=yes,resizable=yes,location=yes'
+                );
+
+                if (!popup) {
+                    this.showStatus('❌ Popup blocked! Please allow popups and try again.', 'error');
+                    return;
+                }
+
+                console.log('🔍 Popup opened successfully, setting up monitoring...');
+
+                // Add message listener for popup communication
+                const messageListener = (event) => {
+                    if (event.origin === window.location.origin && event.data && event.data.type === 'oauth_callback') {
+                        console.log('📨 Received OAuth callback message:', event.data);
+                        clearInterval(checkClosed);
+                        if (!popup.closed) {
+                            popup.close();
+                        }
+                        window.removeEventListener('message', messageListener);
+                        
+                        // Process the callback data directly
+                        this.processCallbackData(event.data);
+                    }
+                };
+                
+                window.addEventListener('message', messageListener);
+
+                // Monitor popup for completion
+                const checkClosed = setInterval(() => {
+                    if (popup.closed) {
+                        console.log('🪟 Popup closed by user or OAuth provider');
+                        clearInterval(checkClosed);
+                        window.removeEventListener('message', messageListener);
+                        
+                        // Check for callback in main window after popup closes
+                        setTimeout(() => {
+                            this.checkForCallback();
+                        }, 500);
+                    }
+                }, 1000);
+            }
+            
+            processCallbackData(callbackData) {
+                console.log('🔄 Processing callback data:', callbackData);
+                
+                const { code, state, error } = callbackData;
+                const storedState = sessionStorage.getItem('oauth_state');
+                
+                if (error) {
+                    this.showStatus(`❌ OAuth error: ${error}`, 'error');
+                    return;
+                }
+
+                if (code && state) {
+                    if (state === storedState) {
+                        this.authState.authCode = code;
+                        this.authState.state = state;
+                        this.authState.tokenUrl = sessionStorage.getItem('token_url');
+                        this.authState.clientId = sessionStorage.getItem('client_id');
+                        this.authState.clientSecret = sessionStorage.getItem('client_secret');
+                        this.authState.codeVerifier = sessionStorage.getItem('code_verifier');
+
+                        this.showStatus('✅ Authorization successful! Now generate curl command for token exchange.', 'success');
+                        this.generateCurlCommand();
+                        this.updateStep(2);
+                    } else {
+                        console.error('❌ State parameter mismatch in callback data:', {
+                            received: state,
+                            stored: storedState
+                        });
+                        this.showStatus(`❌ Invalid state parameter (received: ${state?.substring(0,10)}..., expected: ${storedState?.substring(0,10)}...)`, 'error');
+                    }
+                } else if (code) {
+                    // Handle callback without state
+                    console.log('⚠️ Processing authorization code without state parameter');
+                    this.authState.authCode = code;
+                    this.authState.tokenUrl = sessionStorage.getItem('token_url');
+                    this.authState.clientId = sessionStorage.getItem('client_id');
+                    this.authState.clientSecret = sessionStorage.getItem('client_secret');
+                    this.authState.codeVerifier = sessionStorage.getItem('code_verifier');
+
+                    this.showStatus('✅ Authorization successful! Now generate curl command for token exchange.', 'success');
+                    this.generateCurlCommand();
+                    this.updateStep(2);
+                }
+            }
+
+            checkForCallback() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+                const state = urlParams.get('state');
+                const error = urlParams.get('error');
+                const storedState = sessionStorage.getItem('oauth_state');
+
+                console.log('🔍 Checking callback:', {
+                    currentUrl: window.location.href,
+                    search: window.location.search,
+                    hasCode: !!code,
+                    hasState: !!state,
+                    hasError: !!error,
+                    receivedState: state,
+                    storedState: storedState,
+                    statesMatch: state === storedState,
+                    isPopup: window.opener !== null
+                });
+
+                // If this is a popup window with callback parameters, send to parent
+                if (window.opener && (code || error)) {
+                    console.log('📤 Popup detected, sending callback to parent window');
+                    window.opener.postMessage({
+                        type: 'oauth_callback',
+                        search: window.location.search,
+                        code: code,
+                        state: state,
+                        error: error
+                    }, window.location.origin);
+                    window.close();
+                    return;
+                }
+
+                if (error) {
+                    this.showStatus(`❌ OAuth error: ${error}`, 'error');
+                    return;
+                }
+
+                if (code && state) {
+                    if (state === storedState) {
+                        this.authState.authCode = code;
+                        this.authState.state = state;
+                        this.authState.tokenUrl = sessionStorage.getItem('token_url');
+                        this.authState.clientId = sessionStorage.getItem('client_id');
+                        this.authState.clientSecret = sessionStorage.getItem('client_secret');
+                        this.authState.codeVerifier = sessionStorage.getItem('code_verifier');
+
+                        this.showStatus('✅ Authorization successful! Now generate curl command for token exchange.', 'success');
+                        this.generateCurlCommand();
+                        this.updateStep(2);
+                        
+                        // Clear URL parameters after successful processing
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    } else {
+                        console.error('❌ State parameter mismatch:', {
+                            received: state,
+                            stored: storedState,
+                            urlSearch: window.location.search
+                        });
+                        this.showStatus(`❌ Invalid state parameter (received: ${state?.substring(0,10)}..., expected: ${storedState?.substring(0,10)}...)`, 'error');
+                    }
+                } else if (code) {
+                    // Handle callback without state (some providers)
+                    console.log('⚠️ Authorization code received without state parameter');
+                    this.authState.authCode = code;
+                    this.authState.tokenUrl = sessionStorage.getItem('token_url');
+                    this.authState.clientId = sessionStorage.getItem('client_id');
+                    this.authState.clientSecret = sessionStorage.getItem('client_secret');
+                    this.authState.codeVerifier = sessionStorage.getItem('code_verifier');
+
+                    this.showStatus('✅ Authorization successful! Now generate curl command for token exchange.', 'success');
+                    this.generateCurlCommand();
+                    this.updateStep(2);
+                    
+                    // Clear URL parameters after successful processing
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } else if (window.location.search && !code && !error) {
+                    console.log('⚠️ Callback detected but no authorization code found:', window.location.search);
+                    this.showStatus('⚠️ Callback received but no authorization code found. Please try again.', 'warning');
+                }
+            }
+
+            escapeForUnix(value) {
+                return value.replace(/"/g, '\\"');
+            }
+
+            escapeForPowerShell(value) {
+                return value.replace(/`/g, '``').replace(/"/g, '`"');
+            }
+
+            wrapValue(value, platform) {
+                if (platform === 'powershell') {
+                    return `"${this.escapeForPowerShell(value)}"`;
+                }
+                return `"${this.escapeForUnix(value)}"`;
+            }
+
+            getClientSecretLine(platform) {
+                const placeholder = this.providerInfo.clientSecretPlaceholder || 'YOUR_CLIENT_SECRET';
+                return `  -d ${this.wrapValue(`client_secret=${placeholder}`, platform)}`;
+            }
+
+            buildCurlLines(platform) {
+                const authMode = sessionStorage.getItem('auth_mode');
+                const parts = [];
+                const baseCommand = platform === 'powershell' ? 'curl.exe' : 'curl';
+                const redirectUri = encodeURIComponent(this.authState.callbackUrl);
+
+                parts.push(`${baseCommand} -X POST ${this.wrapValue(this.authState.tokenUrl, platform)}`);
+                parts.push(`  -H ${this.wrapValue('Content-Type: application/x-www-form-urlencoded', platform)}`);
+                parts.push(`  -H ${this.wrapValue('Accept: application/json', platform)}`);
+                parts.push(`  -d ${this.wrapValue(`grant_type=authorization_code`, platform)}`);
+                parts.push(`  -d ${this.wrapValue(`code=${this.authState.authCode}`, platform)}`);
+                parts.push(`  -d ${this.wrapValue(`redirect_uri=${redirectUri}`, platform)}`);
+                parts.push(`  -d ${this.wrapValue(`client_id=${this.authState.clientId}`, platform)}`);
+
+                if (authMode === 'pkce' && this.authState.codeVerifier) {
+                    parts.push(`  -d ${this.wrapValue(`code_verifier=${this.authState.codeVerifier}`, platform)}`);
+                }
+
+                parts.push(this.getClientSecretLine(platform));
+
+                return parts;
+            }
+
+            formatCurlCommand(lines, platform, singleLine) {
+                if (singleLine) {
+                    return lines.join(' ');
+                }
+
+                const continuation = platform === 'powershell' ? ' `' : ' \\';
+                return lines
+                    .map((line, index) => index < lines.length - 1 ? `${line}${continuation}` : line)
+                    .join('\n');
+            }
+
+            generateCurlCommand() {
+                if (!this.authState.authCode || !this.authState.tokenUrl) {
+                    return;
+                }
+
+                const platform = this.curlOptions.powerShell ? 'powershell' : 'unix';
+                const singleLine = this.curlOptions.singleLine;
+                const lines = this.buildCurlLines(platform);
+
+                const curlCommand = this.formatCurlCommand(lines, platform, singleLine);
+
+                console.log('🔧 Generating curl command:', {
+                    platform,
+                    singleLine,
+                    hasCodeVerifier: !!this.authState.codeVerifier,
+                    hasClientSecret: !!this.authState.clientSecret,
+                    authCode: this.authState.authCode.substring(0, 10) + '...',
+                    tokenUrl: this.authState.tokenUrl
+                });
+
+                document.getElementById('curlCommand').textContent = curlCommand;
+                document.getElementById('curlSectionWrapper').classList.remove('hidden');
+                document.getElementById('curlCommand').classList.remove('placeholder');
+            }
+
+            copyCurlCommand() {
+                const curlCommand = document.getElementById('curlCommand').textContent;
+                navigator.clipboard.writeText(curlCommand).then(() => {
+                    this.showToast('Copied');
+                    this.showStatus('✅ Curl command copied to clipboard!', 'success');
+                }).catch(() => {
+                    this.showStatus('❌ Failed to copy to clipboard', 'error');
+                });
+            }
+
+            copyCallbackUrl() {
+                const callbackUrl = document.getElementById('callbackUrl').textContent.trim();
+                if (!callbackUrl) return;
+                navigator.clipboard.writeText(callbackUrl).then(() => {
+                    this.showStatus('✅ Callback URL copied to clipboard!', 'success');
+                }).catch(() => {
+                    this.showStatus('❌ Failed to copy callback URL', 'error');
+                });
+            }
+
+            updateCallbackCopyVisibility() {
+                const button = document.getElementById('copyCallbackBtn');
+                if (!button) return;
+                button.disabled = !this.authState.callbackUrl;
+                if (button.disabled) {
+                    button.classList.add('hidden');
+                } else {
+                    button.classList.remove('hidden');
+                }
+            }
+
+            parseJWTToken() {
+                const tokenInput = document.getElementById('tokenInput').value.trim();
+                
+                if (!tokenInput) {
+                    this.showStatus('Please paste a JWT token', 'error');
+                    return;
+                }
+
+                try {
+                    // Extract token from various formats
+                    const token = this.extractTokenFromInput(tokenInput);
+
+                    // Parse JWT
+                    const parts = token.split('.');
+                    if (parts.length !== 3) {
+                        throw new Error('Invalid JWT format');
+                    }
+
+                    const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+                    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+                    // Display JWT parts
+                    document.getElementById('jwtHeader').textContent = JSON.stringify(header, null, 2);
+                    document.getElementById('jwtPayload').textContent = JSON.stringify(payload, null, 2);
+                    document.getElementById('jwtSection').classList.remove('hidden');
+                document.getElementById('userInfoContainer').classList.remove('hidden');
+
+                // Extract user information
+                const userInfo = this.extractUserInfo(payload);
+                if (userInfo) {
+                    document.getElementById('userInfoDisplay').textContent = JSON.stringify(userInfo, null, 2);
+                    this.showStatus('✅ JWT token parsed successfully!', 'success');
+                }
+
+                } catch (error) {
+                    console.error('JWT parsing error:', error);
+                    this.showStatus(`❌ Failed to parse JWT: ${error.message}`, 'error');
+                }
+            }
+
+            extractTokenFromInput(input) {
+                let token = input.trim();
+
+                if (!token) {
+                    return '';
+                }
+
+                if (token.startsWith('{')) {
+                    try {
+                        const jsonResponse = JSON.parse(token);
+                        token = jsonResponse.access_token || jsonResponse.token || token;
+                    } catch (error) {
+                        console.warn('Failed to parse token JSON response:', error);
+                    }
+                }
+
+                if (token.includes('access_token=')) {
+                    const urlParams = new URLSearchParams(token);
+                    token = urlParams.get('access_token') || token;
+                }
+
+                const cleanToken = token.split(/[\s\n]+/)[0];
+                return cleanToken;
+            }
+
+            extractUserInfo(payload) {
+                // Common JWT claims for user information
+                const userInfo = {};
+                
+                // Standard claims
+                if (payload.sub) userInfo.id = payload.sub;
+                if (payload.name) userInfo.name = payload.name;
+                if (payload.email) userInfo.email = payload.email;
+                if (payload.preferred_username) userInfo.username = payload.preferred_username;
+                if (payload.given_name) userInfo.firstName = payload.given_name;
+                if (payload.family_name) userInfo.lastName = payload.family_name;
+                if (payload.picture) userInfo.picture = payload.picture;
+                
+                // Provider-specific claims
+                if (payload.login) userInfo.login = payload.login;
+                if (payload.avatar_url) userInfo.avatar = payload.avatar_url;
+                if (payload.company) userInfo.company = payload.company;
+                if (payload.location) userInfo.location = payload.location;
+                
+                // Token metadata
+                if (payload.iss) userInfo.issuer = payload.iss;
+                if (payload.aud) userInfo.audience = payload.aud;
+                if (payload.exp) userInfo.expires = new Date(payload.exp * 1000).toISOString();
+                if (payload.iat) userInfo.issuedAt = new Date(payload.iat * 1000).toISOString();
+                if (payload.scope) userInfo.scope = payload.scope;
+
+                return Object.keys(userInfo).length > 0 ? userInfo : payload;
+            }
+
+            applyProviderPreset(provider) {
+                if (!provider) return;
+
+                const presets = {
+                    'sso-tools': {
+                        authUrl: 'https://idp.sso.tools/mcidp/oauth2/authorize',
+                        tokenUrl: 'https://idp.sso.tools/mcidp/oauth2/token',
+                        revocationUrl: 'https://idp.sso.tools/mcidp/oauth2/revoke',
+                        scope: 'read'
+                    },
+                    'github': {
+                        authUrl: 'https://github.com/login/oauth/authorize',
+                        tokenUrl: 'https://github.com/login/oauth/access_token',
+                        revocationUrl: 'https://github.com/settings/connections/applications',
+                        scope: 'user:email'
+                        // Note: You need to create your own GitHub OAuth app and use your client_id and client_secret
+                        // Visit: https://github.com/settings/applications/new
+                    },
+                    'google': {
+                        authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
+                        tokenUrl: 'https://oauth2.googleapis.com/token',
+                        revocationUrl: 'https://oauth2.googleapis.com/revoke',
+                        scope: 'openid profile email'
+                    },
+                    'microsoft': {
+                        authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+                        tokenUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+                        revocationUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/logout',
+                        scope: 'openid profile email'
+                    },
+                    'discord': {
+                        authUrl: 'https://discord.com/api/oauth2/authorize',
+                        tokenUrl: 'https://discord.com/api/oauth2/token',
+                        revocationUrl: 'https://discord.com/api/oauth2/token/revoke',
+                        scope: 'identify email'
+                    },
+                    'linkedin': {
+                        authUrl: 'https://www.linkedin.com/oauth/v2/authorization',
+                        tokenUrl: 'https://www.linkedin.com/oauth/v2/accessToken',
+                        revocationUrl: 'https://www.linkedin.com/oauth/v2/revoke',
+                        scope: 'r_liteprofile r_emailaddress'
+                    },
+                    'okta': {
+                        authUrl: 'https://your-org.okta.com/oauth2/default/v1/authorize',
+                        tokenUrl: 'https://your-org.okta.com/oauth2/default/v1/token',
+                        revocationUrl: 'https://your-org.okta.com/oauth2/default/v1/revoke',
+                        scope: 'openid profile email'
+                    }
+                };
+
+                const preset = presets[provider];
+                if (!preset) return;
+
+                // Apply to current mode
+                if (this.currentMode === 'clientId') {
+                    document.getElementById('authorizationUrl').value = preset.authUrl;
+                    document.getElementById('tokenUrl').value = preset.tokenUrl;
+                    document.getElementById('scope').value = preset.scope;
+                    if (preset.clientId) {
+                        document.getElementById('clientId').value = preset.clientId;
+                    }
+                    // Clear client secret when switching providers
+                    if (provider !== 'sso-tools') {
+                        document.getElementById('clientSecret').value = '';
+                    }
+                } else {
+                    document.getElementById('pkceAuthUrl').value = preset.authUrl;
+                    document.getElementById('pkceTokenUrl').value = preset.tokenUrl;
+                    document.getElementById('pkceScope').value = preset.scope;
+                    if (preset.clientId) {
+                        document.getElementById('pkceClientId').value = preset.clientId;
+                    }
+                }
+
+                this.providerInfo.revocationUrl = preset.revocationUrl || null;
+
+                const revocationInfo = document.getElementById('revocationInfo');
+                if (this.providerInfo.revocationUrl) {
+                    const linkHtml = `<strong>Revocation endpoint:</strong> <a href="${this.providerInfo.revocationUrl}" target="_blank" rel="noopener">${this.providerInfo.revocationUrl}</a>`;
+                    revocationInfo.innerHTML = linkHtml;
+                    revocationInfo.classList.remove('hidden');
+                } else {
+                    const noInfo = '<strong>Revocation endpoint:</strong> Not provided for this preset';
+                    revocationInfo.innerHTML = noInfo;
+                    revocationInfo.classList.remove('hidden');
+                }
+                this.updateRevocationStatusInfo();
+
+                console.log(`✅ Applied ${provider} preset:`, preset);
+                
+                if (provider === 'github') {
+                    this.showStatus(`✅ Applied GitHub preset. ⚠️ You need to provide your own Client ID and Secret from https://github.com/settings/applications/new`, 'warning');
+                } else {
+                    this.showStatus(`✅ Applied ${provider.charAt(0).toUpperCase() + provider.slice(1)} preset settings`, 'success');
+                }
+            }
+
+            updateStep(step) {
+                this.currentStep = step;
+            }
+
+            async revokeToken() {
+                const revocationStatus = document.getElementById('revocationStatus');
+                revocationStatus.classList.add('hidden');
+                revocationStatus.textContent = '';
+                revocationStatus.classList.remove('success', 'warning', 'error');
+                revocationStatus.classList.add('info');
+
+                const tokenInput = document.getElementById('tokenInput').value.trim();
+                const idTokenInput = document.getElementById('idTokenInput').value.trim();
+                const token = tokenInput ? this.extractTokenFromInput(tokenInput) : '';
+                const idToken = idTokenInput ? this.extractTokenFromInput(idTokenInput) : '';
+
+                if (token && this.providerInfo.revocationUrl) {
+                    revocationStatus.textContent = 'Revoking token...';
+                    revocationStatus.classList.remove('hidden');
+
+                    try {
+                        const params = new URLSearchParams({
+                            token,
+                            client_id: this.authState.clientId || '',
+                            client_secret: this.providerInfo.clientSecretPlaceholder || 'YOUR_CLIENT_SECRET'
+                        });
+
+                        if (idToken) {
+                            params.append('id_token', idToken);
+                        }
+
+                        const response = await fetch(this.providerInfo.revocationUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: params
+                        });
+
+                        const text = await response.text();
+                        const resultMessage = response.ok ? '✅ Token revoked successfully' : `⚠️ Revocation request responded with status ${response.status}`;
+                        revocationStatus.textContent = `${resultMessage}${text ? ` - Response: ${text}` : ''}`;
+                        revocationStatus.classList.remove('info');
+                        revocationStatus.classList.add(response.ok ? 'success' : 'warning');
+                    } catch (error) {
+                        revocationStatus.textContent = `❌ Failed to revoke token: ${error.message}`;
+                        revocationStatus.classList.remove('info');
+                        revocationStatus.classList.add('error');
+                    }
+                } else {
+                    revocationStatus.textContent = token ? '⚠️ Revocation URL not provided for the selected provider.' : 'ℹ️ No token available to revoke.';
+                    revocationStatus.classList.remove('info');
+                    revocationStatus.classList.add('warning');
+                    revocationStatus.classList.remove('hidden');
+                }
+            }
+
+            resetSessionState() {
+                // Clear all data
+                this.authState = {
+                    authCode: null,
+                    state: null,
+                    codeVerifier: null,
+                    tokenUrl: null,
+                    clientId: null,
+                    clientSecret: null,
+                    callbackUrl: this.authState.callbackUrl
+                };
+
+                this.providerInfo.clientSecretPlaceholder = 'YOUR_CLIENT_SECRET';
+
+                // Clear storage
+                sessionStorage.clear();
+                
+                // Clear URL parameters
+                if (window.location.search) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+                
+                // Clear inputs
+                document.getElementById('tokenInput').value = '';
+                document.getElementById('idTokenInput').value = '';
+                
+                // Hide sections
+                document.getElementById('curlSectionWrapper').classList.add('hidden');
+                document.getElementById('jwtSection').classList.add('hidden');
+                document.getElementById('revocationStatus').classList.add('hidden');
+                document.getElementById('curlCommand').textContent = '';
+                this.curlOptions = {
+                    singleLine: false,
+                    powerShell: false
+                };
+                this.updateCurlOptionControls();
+                
+                // Reset user info
+                document.getElementById('userInfoDisplay').innerHTML = '<pre>No user information available</pre>';
+                
+                document.getElementById('jwtSection').classList.add('hidden');
+                document.getElementById('userInfoContainer').classList.add('hidden');
+
+                this.showStatus('✅ Session reset successfully', 'success');
+                this.updateUI();
+            }
+
+            updateCurlOptionControls() {
+                const singleLineOption = document.getElementById('curlSingleLine');
+                const powerShellOption = document.getElementById('curlPowerShell');
+
+                if (singleLineOption && powerShellOption) {
+                    singleLineOption.checked = this.curlOptions.singleLine;
+                    powerShellOption.checked = this.curlOptions.powerShell;
+                }
+            }
+
+            updateCurlOptions(updates) {
+                this.curlOptions = {
+                    ...this.curlOptions,
+                    ...updates
+                };
+                this.updateCurlOptionControls();
+                this.generateCurlCommand();
+            }
+
+            updateUI() {
+                this.updateCurlOptionControls();
+            }
+
+            setupTabs() {
+                this.activeTab = 'authTab';
+                const tabButtons = document.querySelectorAll('.tab-button');
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const target = button.getAttribute('data-tab');
+                        this.showTab(target);
+                    });
+                });
+                this.showTab(this.activeTab);
+            }
+
+            showTab(tabId) {
+                const tabButtons = document.querySelectorAll('.tab-button');
+                const panels = document.querySelectorAll('.tab-panel');
+                tabButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId));
+                panels.forEach(panel => panel.classList.toggle('hidden', panel.id !== tabId));
+                this.activeTab = tabId;
+            }
+
+            showStatus(message, type = 'info') {
+                const statusArea = document.getElementById('statusArea');
+                if (type === 'success') {
+                    this.showToast('Prefilled');
+                }
+                statusArea.innerHTML = `<div class="status ${type}">${message}</div>`;
+                
+                if (type === 'success') {
+                    setTimeout(() => {
+                        statusArea.innerHTML = '';
+                    }, 5000);
+                }
+            }
+        }
+
+        // Initialize the OAuth tester when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            window.oauthTester = new OAuthTester();
+        });
+    </script>
+</body>
+</html>
